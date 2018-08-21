@@ -1,6 +1,10 @@
 package config
 
-import ini "gopkg.in/ini.v1"
+import (
+	"path/filepath"
+
+	ini "gopkg.in/ini.v1"
+)
 
 var (
 	// Addr is the listening address
@@ -32,4 +36,6 @@ func Load() {
 	Db.Password = cfg.Section("db").Key("password").MustString("")
 	Db.Name = cfg.Section("db").Key("name").MustString("golog")
 	Db.Addr = cfg.Section("db").Key("addr").MustString("root")
+
+	WorkingDirectory, _ = filepath.Abs("data")
 }

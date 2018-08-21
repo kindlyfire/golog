@@ -1,10 +1,8 @@
 package index
 
-import (
-	"gopkg.in/macaron.v1"
-)
+import "github.com/kindlyfire/golog/modules/context"
 
 // Index ...
-func Index(ctx *macaron.Context) {
-	ctx.HTML(200, "index")
+func Index(ctx context.Context) {
+	ctx.Render(200, "other")
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/kindlyfire/golog/modules/config"
 	"github.com/kindlyfire/golog/modules/db"
+	"github.com/kindlyfire/golog/modules/theme"
 	"github.com/kindlyfire/golog/router"
 )
 
@@ -28,6 +29,9 @@ func start(stoppedChannel chan<- bool) {
 
 	// Connect to the database
 	db.Connect()
+
+	// Load theme
+	theme.Load()
 
 	// Create router & server
 	m := router.New()
