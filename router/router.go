@@ -1,12 +1,8 @@
 package router
 
 import (
-	"path"
-
 	"github.com/go-macaron/session"
-	"github.com/kindlyfire/golog/modules/config"
 	"github.com/kindlyfire/golog/modules/context"
-	"github.com/kindlyfire/golog/modules/theme"
 	"github.com/kindlyfire/golog/router/routes/index"
 
 	"gopkg.in/macaron.v1"
@@ -21,12 +17,6 @@ func New() *macaron.Macaron {
 		Prefix: "public",
 	}))
 	m.Use(session.Sessioner())
-	m.Use(macaron.Renderer(macaron.RenderOptions{
-		Directory: "templates",
-		AppendDirectories: []string{
-			path.Join(config.WorkingDirectory, theme.ThemeDir),
-		},
-	}))
 	m.Use(context.Middleware())
 
 	return m

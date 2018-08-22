@@ -10,6 +10,7 @@ import (
 	"github.com/kindlyfire/golog/modules/db"
 	col "github.com/logrusorgru/aurora"
 	ini "gopkg.in/ini.v1"
+	macaron "gopkg.in/macaron.v1"
 )
 
 var (
@@ -59,4 +60,11 @@ func ActivateTheme(slug string) error {
 	ThemeInfo = cfg
 
 	return nil
+}
+
+// GetRenderer returns the macaron handler that adds the renderer for theme templates to the context
+func GetRenderer() macaron.Handler {
+	return macaron.Renderer(macaron.RenderOptions{
+		Directory: path.Join(config.WorkingDirectory, ThemeDir),
+	})
 }
