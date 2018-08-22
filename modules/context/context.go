@@ -25,9 +25,10 @@ func Middleware() macaron.Handler {
 		ctx := Context{
 			RealCtx:   realCtx,
 			Renderers: renderers,
+			Data:      make(map[string]interface{}),
 		}
 
-		realCtx.Map(ctx)
+		realCtx.Map(&ctx)
 	}
 }
 
@@ -41,6 +42,7 @@ type Renderers struct {
 type Context struct {
 	RealCtx   *macaron.Context
 	Renderers Renderers
+	Data      map[string]interface{}
 }
 
 // ThemeHTML renders theme template
@@ -53,4 +55,9 @@ func (c *Context) ThemeHTML(code int, tpl string) {
 func (c *Context) AdminHTML(code int, tpl string) {
 	c.RealCtx.Invoke(c.Renderers.Admin)
 	c.RealCtx.HTML(code, tpl)
+}
+
+// Redirect ...
+func (c Context) Redirect(url string, status ...int) {
+	c.RealCtx.Redirect(url, status...)
 }

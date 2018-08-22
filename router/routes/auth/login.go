@@ -1,12 +1,43 @@
 package auth
 
 import (
+	"github.com/jinzhu/gorm"
+	"github.com/kindlyfire/golog/models"
+	"github.com/kindlyfire/golog/modules/context"
+
 	"github.com/go-macaron/session"
-	macaron "gopkg.in/macaron.v1"
 )
 
 // Login shows the login page
-func Login(ctx *macaron.Context, sess session.Store) {
-	sess.Set("user_id", 1)
+func Login(ctx *context.Context, sess session.Store) {
+	if ctx.Data["LoggedIn"].(bool) {
+		ctx.Redirect("/")
+		return
+	}
+
+	ctx.Data["ForwardedUID"] = sess.Get("ForwardedUID")
+	sess.Delete("ForwardedUID")
+
+	ctx.AdminHTML(200, "auth/login")
+}
+
+// LoginPostForm is the form for LoginPost
+type LoginPostForm struct {
+	UID      string `form:"uid" binding:"Required"`
+	Password string `form:"password" binding:"Required"`
+}
+
+func LoginPost(ctx *context.Context, db *gorm.DB, form LoginPostForm, flash *session.Flash, sess session.Store) {
+	user := models.User{}
+	err := db.Where("username = ? OR email = ?", form.UID, form.UID).First(&user).Error
+
+	if err != nil || !user.CheckPassword(form.Password) {
+		flash.Error("Invalid username or password.")
+		sess.Set("ForwardedUID", form.UID)
+		ctx.Redirect("/auth/login")
+		return
+	}
+
+	sess.Set("user_id", user.ID)
 	ctx.Redirect("/gl-admin")
 }

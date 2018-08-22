@@ -51,11 +51,13 @@ func New() *macaron.Macaron {
 
 // Register registers all routes
 func Register(m *macaron.Macaron) {
-	// Register admin routes
+	// Auth routes routes
 	m.Group("/gl-auth", func() {
 		m.Get("/login", auth.Login)
+		m.Post("/login", auth.LoginPost)
 	})
 
+	// Administration panel routes
 	m.Group("/gl-admin", func() {
 		m.Get("/", admin.Index)
 	}, middleware.RequireUser)
