@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Golog</title>
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" href="{{GlAssetsUrl}}/main.css">
+    </head>
+    <body>
+        <div class="container">
+            {{if .Flash.ErrorMsg}}
+                <p>{{.Flash.ErrorMsg}}</p>
+            {{end}}
+
+            <form action="" method="POST" class="form">
+                <input type="text" name="uid" id="i_uid" placeholder="Username or email" value="{{.ForwardedUID}}" required>
+                <input type="password" name="password" id="i_password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </body>
+</html>

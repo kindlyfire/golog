@@ -1,6 +1,9 @@
 package context
 
 import (
+	"path"
+
+	"github.com/kindlyfire/golog/modules/config"
 	"github.com/kindlyfire/golog/modules/theme"
 	macaron "gopkg.in/macaron.v1"
 )
@@ -10,8 +13,12 @@ func Middleware() macaron.Handler {
 	renderers := Renderers{
 		Admin: macaron.Renderer(macaron.RenderOptions{
 			Directory: "templates",
+			Funcs:     getTemplateFuncs(),
 		}),
-		Theme: theme.GetRenderer(),
+		Theme: macaron.Renderer(macaron.RenderOptions{
+			Directory: path.Join(config.WorkingDirectory, theme.ThemeDir),
+			Funcs:     getTemplateFuncs(),
+		}),
 	}
 
 	return func(realCtx *macaron.Context) {

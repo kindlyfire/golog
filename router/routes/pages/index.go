@@ -1,4 +1,4 @@
-package index
+package pages
 
 import "github.com/kindlyfire/golog/modules/context"
 
