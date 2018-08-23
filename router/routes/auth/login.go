@@ -23,10 +23,22 @@ func Login(ctx *context.Context, sess session.Store) {
 
 // LoginPostForm is the form for LoginPost
 type LoginPostForm struct {
-	UID      string `form:"uid" binding:"Required"`
-	Password string `form:"password" binding:"Required"`
+	UID      string `form:"uid" binding:"Required" forwardAs:"ForwardedUID" err:"Username or email required"`
+	Password string `form:"password" binding:"Required" err:"Password is required"`
 }
 
+// func (f LoginPostForm) Validate(ctx *macaron.Context, errs binding.Errors) binding.Errors {
+// 	if f.UID == "a" {
+// 		errs = append(errs, binding.Error{
+// 			FieldNames:     []string{"UID"},
+// 			Classification: "Custom",
+// 			Message:        "Test message !",
+// 		})
+// 	}
+// 	return errs
+// }
+
+// LoginPost ...
 func LoginPost(ctx *context.Context, db *gorm.DB, form LoginPostForm, flash *session.Flash, sess session.Store) {
 	user := models.User{}
 	err := db.Where("username = ? OR email = ?", form.UID, form.UID).First(&user).Error
@@ -34,7 +46,7 @@ func LoginPost(ctx *context.Context, db *gorm.DB, form LoginPostForm, flash *ses
 	if err != nil || !user.CheckPassword(form.Password) {
 		flash.Error("Invalid username or password.")
 		sess.Set("ForwardedUID", form.UID)
-		ctx.Redirect("/auth/login")
+		ctx.Redirect("/gl-auth/login")
 		return
 	}
 

@@ -27,7 +27,7 @@ func FetchUser(ctx *context.Context, sess session.Store, db *gorm.DB) {
 // RequireUser redirects to the homepage if the user is not logged in
 func RequireUser(ctx *context.Context, flash *session.Flash) {
 	if !ctx.Data["LoggedIn"].(bool) {
-		ctx.Redirect("/")
+		ctx.Redirect("/gl-auth/login")
 		return
 	}
 }

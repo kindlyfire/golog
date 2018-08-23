@@ -43,6 +43,10 @@ func New() *macaron.Macaron {
 	// And set ctx.Data["LoggedIn"] to true/false
 	m.Use(middleware.FetchUser)
 
+	// Forward data from a form that has had an error
+	// To make it available
+	m.Use(middleware.BindErrForwarder)
+
 	// Map our database
 	m.Map(db.Db)
 
@@ -54,7 +58,7 @@ func Register(m *macaron.Macaron) {
 	// Auth routes routes
 	m.Group("/gl-auth", func() {
 		m.Get("/login", auth.Login)
-		m.Post("/login", auth.LoginPost)
+		m.Post("/login", middleware.Bind(auth.LoginPostForm{}), auth.LoginPost)
 	})
 
 	// Administration panel routes

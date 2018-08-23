@@ -25,7 +25,7 @@ func Middleware() macaron.Handler {
 		ctx := Context{
 			RealCtx:   realCtx,
 			Renderers: renderers,
-			Data:      make(map[string]interface{}),
+			Data:      realCtx.Data,
 		}
 
 		realCtx.Map(&ctx)
@@ -57,7 +57,13 @@ func (c *Context) AdminHTML(code int, tpl string) {
 	c.RealCtx.HTML(code, tpl)
 }
 
+// Status ...
+func (c *Context) Status(code int) {
+	c.RealCtx.Invoke(c.Renderers.Admin)
+	c.RealCtx.Status(code)
+}
+
 // Redirect ...
-func (c Context) Redirect(url string, status ...int) {
+func (c *Context) Redirect(url string, status ...int) {
 	c.RealCtx.Redirect(url, status...)
 }
