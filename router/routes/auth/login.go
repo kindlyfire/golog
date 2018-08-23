@@ -42,8 +42,14 @@ func LoginPost(ctx *context.Context, db *gorm.DB, form LoginPostForm, flash *ses
 	err := db.Where("username = ? OR email = ?", form.UID, form.UID).First(&user).Error
 
 	if err != nil || !user.CheckPassword(form.Password) {
+		// Flash an error
 		flash.Error("Invalid username or password.")
+
+		// Forward some data
 		sess.Set("ForwardedUID", form.UID)
+		sess.Set("Forwards", "ForwardedUID")
+
+		// Redirect
 		ctx.Redirect("/gl-auth/login")
 		return
 	}

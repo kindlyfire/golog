@@ -17,3 +17,14 @@ schema:
     - .git
     - .realize
     - vendor
+- name: pack
+  path: .
+  watcher:
+    paths:
+      - public/js/
+    extensions:
+      - js
+      - vue
+    scripts:
+      - type: after
+        command: node node_modules/browserify/bin/cmd.js public/js/panel.js -o public/dist/panel.js -t vueify -d

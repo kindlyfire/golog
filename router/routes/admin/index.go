@@ -1,5 +1,9 @@
 package admin
 
-func Index() string {
-	return "Admin !"
+import (
+	"github.com/kindlyfire/golog/modules/context"
+)
+
+func Index(ctx *context.Context) {
+	ctx.AdminHTML(200, "panel/index")
 }

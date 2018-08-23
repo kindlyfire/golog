@@ -20,6 +20,9 @@ var (
 
 	// WorkingDirectory contains where are all the themes, plugins, etc. stored ?
 	WorkingDirectory = "."
+
+	// Debug ...
+	Debug = false
 )
 
 // Load loads the configuration file
@@ -38,4 +41,9 @@ func Load() {
 	Db.Addr = cfg.Section("db").Key("addr").MustString("root")
 
 	WorkingDirectory, _ = filepath.Abs("data")
+
+	Debug, err = cfg.Section("").Key("debug").Bool()
+	if err != nil {
+		Debug = false
+	}
 }

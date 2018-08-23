@@ -1,0 +1,24 @@
+{
+  "name": "golog",
+  "version": "0.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KindlyFire/golog.git"
+  },
+  "author": "Tijl Van den Brugghen <me@kindlyfire.me>",
+  "license": "Apache2.0 + Commons Clause",
+  "bugs": {
+    "url": "https://github.com/KindlyFire/golog/issues"
+  },
+  "homepage": "https://github.com/KindlyFire/golog#readme",
+  "dependencies": {
+    "browserify": "^16.2.2",
+    "vue": "^2.5.17",
+    "vueify": "^9.4.1"
+  }
+}

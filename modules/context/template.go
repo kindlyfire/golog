@@ -2,6 +2,8 @@ package context
 
 import (
 	"html/template"
+
+	"github.com/kindlyfire/golog/modules/config"
 )
 
 func getTemplateFuncs() []template.FuncMap {
@@ -11,6 +13,9 @@ func getTemplateFuncs() []template.FuncMap {
 		},
 		"GlAssetsUrl": func() string {
 			return "/_/gl-data"
+		},
+		"Debug": func() bool {
+			return config.Debug
 		},
 	}}
 }

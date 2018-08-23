@@ -3,6 +3,9 @@ package router
 import (
 	"path"
 
+	// ...
+	_ "github.com/go-macaron/session/redis"
+
 	"github.com/go-macaron/session"
 	"github.com/kindlyfire/golog/modules/config"
 	"github.com/kindlyfire/golog/modules/context"
@@ -34,7 +37,11 @@ func New() *macaron.Macaron {
 	}))
 
 	// Session support
-	m.Use(session.Sessioner())
+	m.Use(session.Sessioner(session.Options{
+		Provider: "redis",
+		// e.g.: network=tcp,addr=127.0.0.1:6379,password=macaron,db=0,pool_size=100,idle_timeout=180,prefix=session:
+		ProviderConfig: "addr=127.0.0.1:6379,prefix=session:",
+	}))
 
 	// Build and map our context to the request
 	m.Use(context.Middleware())
