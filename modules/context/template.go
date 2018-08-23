@@ -17,5 +17,8 @@ func getTemplateFuncs() []template.FuncMap {
 		"Debug": func() bool {
 			return config.Debug
 		},
+		"BaseUrl": func() string {
+			return config.BaseUrl
+		},
 	}}
 }

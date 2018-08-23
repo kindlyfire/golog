@@ -23,6 +23,9 @@ var (
 
 	// Debug ...
 	Debug = false
+
+	// BaseUrl app url
+	BaseUrl string
 )
 
 // Load loads the configuration file
@@ -45,5 +48,10 @@ func Load() {
 	Debug, err = cfg.Section("").Key("debug").Bool()
 	if err != nil {
 		Debug = false
+	}
+
+	BaseUrl = cfg.Section("http").Key("base").MustString("")
+	if BaseUrl == "/" {
+		BaseUrl = ""
 	}
 }

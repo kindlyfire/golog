@@ -68,10 +68,9 @@ func Register(m *macaron.Macaron) {
 		m.Post("/login", middleware.Bind(auth.LoginPostForm{}), auth.LoginPost)
 	})
 
-	// Administration panel routes
-	m.Group("/gl-admin", func() {
-		m.Get("/", admin.Index)
-	}, middleware.RequireUser)
+	// Administration panel route
+	m.Get("/gl-admin", middleware.RequireUser, admin.Index)
+	m.Get("/gl-admin/*", middleware.RequireUser, admin.Index)
 
 	// Register index and catch-all page renderer
 	m.Any("/", pages.Index)

@@ -1,5 +1,8 @@
 <template>
-    <p>{{ message }}</p>
+    <div>
+        <p>{{ message }}</p>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
