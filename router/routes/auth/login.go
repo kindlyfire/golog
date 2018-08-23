@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/kindlyfire/golog/models"
+	"github.com/kindlyfire/golog/modules/config"
 	"github.com/kindlyfire/golog/modules/context"
 
 	"github.com/go-macaron/session"
@@ -11,7 +12,7 @@ import (
 // Login shows the login page
 func Login(ctx *context.Context, sess session.Store) {
 	if ctx.Data["LoggedIn"].(bool) {
-		ctx.Redirect("/")
+		ctx.Redirect(config.BaseUrl + "/")
 		return
 	}
 
@@ -50,10 +51,10 @@ func LoginPost(ctx *context.Context, db *gorm.DB, form LoginPostForm, flash *ses
 		sess.Set("Forwards", "ForwardedUID")
 
 		// Redirect
-		ctx.Redirect("/gl-auth/login")
+		ctx.Redirect(config.BaseUrl + "/gl-auth/login")
 		return
 	}
 
 	sess.Set("user_id", user.ID)
-	ctx.Redirect("/gl-admin")
+	ctx.Redirect(config.BaseUrl + "/gl-admin")
 }

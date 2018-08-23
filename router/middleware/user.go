@@ -4,6 +4,7 @@ import (
 	"github.com/go-macaron/session"
 	"github.com/jinzhu/gorm"
 	"github.com/kindlyfire/golog/models"
+	"github.com/kindlyfire/golog/modules/config"
 	"github.com/kindlyfire/golog/modules/context"
 )
 
@@ -27,7 +28,7 @@ func FetchUser(ctx *context.Context, sess session.Store, db *gorm.DB) {
 // RequireUser redirects to the homepage if the user is not logged in
 func RequireUser(ctx *context.Context, flash *session.Flash) {
 	if !ctx.Data["LoggedIn"].(bool) {
-		ctx.Redirect("/gl-auth/login")
+		ctx.Redirect(config.BaseUrl + "/gl-auth/login")
 		return
 	}
 }
