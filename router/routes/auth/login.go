@@ -24,6 +24,7 @@ type LoginPostForm struct {
 	Password string `form:"password" binding:"Required" err:"Password is required"`
 }
 
+// Example of validation
 // func (f LoginPostForm) Validate(ctx *macaron.Context, errs binding.Errors) binding.Errors {
 // 	if f.UID == "a" {
 // 		errs = append(errs, binding.Error{

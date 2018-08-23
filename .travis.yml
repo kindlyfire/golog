@@ -1,0 +1,9 @@
+language: go
+
+go:
+  - "1.10"
+
+git:
+  quiet: true
+
+script: go build github.com/kindlyfire/golog
