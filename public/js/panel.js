@@ -18,5 +18,10 @@ Vue.use(Router)
 new Vue({
     router,
     el: "#app",
-    render: (h) => h(comp)
+    render: (h) => h(comp),
+    data: {
+        page: {
+            title: "Test !"
+        }
+    }
 })

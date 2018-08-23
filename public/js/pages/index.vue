@@ -1,11 +1,19 @@
 <template>
-    <p>Index !</p>
+    <div class="panel-container">
+        <p>Welcome to your Golog instance !</p>
+    </div>
 </template>
 
 <script>
 module.exports = {
-    data: function() {
-        return {}
+    beforeCreate: function() {
+        const wm = this.$root
+
+        wm.$emit('titleChange', "Dashboard")
     }
 }
 </script>
+
+<style>
+
+</style>
