@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"reflect"
 	"strings"
 
@@ -65,6 +64,7 @@ func Bind(obj interface{}) macaron.Handler {
 
 func BindErrForwarder(ctx *context.Context, sess session.Store) {
 	forwardsStr, ok := sess.Get("Forwards").(string)
+	sess.Delete("Forwards")
 
 	// There is nothing to forward
 	if !ok {
@@ -75,6 +75,7 @@ func BindErrForwarder(ctx *context.Context, sess session.Store) {
 
 	for _, fw := range forwards {
 		str, ok := sess.Get(fw).(string)
+		sess.Delete(fw)
 
 		if !ok {
 			continue
@@ -82,6 +83,4 @@ func BindErrForwarder(ctx *context.Context, sess session.Store) {
 
 		ctx.Data[fw] = str
 	}
-
-	fmt.Println(forwards)
 }

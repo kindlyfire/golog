@@ -15,9 +15,6 @@ func Login(ctx *context.Context, sess session.Store) {
 		return
 	}
 
-	ctx.Data["ForwardedUID"] = sess.Get("ForwardedUID")
-	sess.Delete("ForwardedUID")
-
 	ctx.AdminHTML(200, "auth/login")
 }
 
