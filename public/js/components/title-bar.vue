@@ -25,7 +25,6 @@ module.exports = {
 }
 </script>
 
-
 <style>
 .title-bar-container {
     height: 75px;

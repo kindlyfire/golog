@@ -4,7 +4,8 @@ const Router = require('vue-router')
 const comp = require('./panel.vue')
 
 const routes = [
-    { path: '/', component: require('./pages/index.vue') }
+    { path: '/', component: require('./pages/index.vue') },
+    { path: '/posts', component: require('./pages/posts/list.vue') }
 ]
 
 const router = new Router({

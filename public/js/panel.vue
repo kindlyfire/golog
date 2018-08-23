@@ -5,6 +5,8 @@
                 <div class="title-container">
                     <h1 class="title">Golog</h1>
                 </div>
+
+                <sidebar-content></sidebar-content>
             </div>
             <div class="col-lg-10 pl-0 panel-column-right">
                 <title-bar></title-bar>
@@ -17,7 +19,8 @@
 <script>
 module.exports = {
     components: {
-        TitleBar: require('./components/title-bar.vue')
+        TitleBar: require('./components/title-bar.vue'),
+        SidebarContent: require('./components/sidebar-content.vue')
     }
 }
 </script>
