@@ -13,6 +13,7 @@ import (
 	"github.com/kindlyfire/golog/modules/theme"
 	"github.com/kindlyfire/golog/router/middleware"
 	"github.com/kindlyfire/golog/router/routes/admin"
+	"github.com/kindlyfire/golog/router/routes/api/posts"
 	"github.com/kindlyfire/golog/router/routes/auth"
 	"github.com/kindlyfire/golog/router/routes/pages"
 
@@ -62,19 +63,24 @@ func New() *macaron.Macaron {
 
 // Register registers all routes
 func Register(m *macaron.Macaron) {
-	m.Group(config.BaseUrl, func() {
-		// Auth routes routes
-		m.Group("/gl-auth", func() {
-			m.Get("/login", auth.Login)
-			m.Post("/login", middleware.Bind(auth.LoginPostForm{}), auth.LoginPost)
-		})
+	m.SetURLPrefix(config.BaseUrl)
 
-		// Administration panel route
-		m.Get("/gl-admin", middleware.RequireUser, admin.Index)
-		m.Get("/gl-admin/*", middleware.RequireUser, admin.Index)
-
-		// Register index and catch-all page renderer
-		m.Any("/", pages.Index)
-		m.Any("/*", pages.Page)
+	// Auth routes routes
+	m.Group("/gl-auth", func() {
+		m.Get("/login", auth.Login)
+		m.Post("/login", middleware.Bind(auth.LoginPostForm{}), auth.LoginPost)
 	})
+
+	// Administration panel route
+	m.Get("/gl-admin", middleware.RequireUser, admin.Index)
+	m.Get("/gl-admin/*", middleware.RequireUser, admin.Index)
+
+	// API
+	m.Group("/gl-api/", func() {
+		m.Get("/posts/list", posts.List)
+	}, middleware.RequireUser)
+
+	// Register index and catch-all page renderer
+	m.Any("/", pages.Index)
+	m.Any("/*", pages.Page)
 }

@@ -59,11 +59,17 @@ func (c *Context) AdminHTML(code int, tpl string) {
 
 // Status ...
 func (c *Context) Status(code int) {
-	c.RealCtx.Invoke(c.Renderers.Admin)
+	c.RealCtx.Invoke(c.Renderers.Theme)
 	c.RealCtx.Status(code)
 }
 
 // Redirect ...
 func (c *Context) Redirect(url string, status ...int) {
 	c.RealCtx.Redirect(url, status...)
+}
+
+// JSON ....
+func (c *Context) JSON(code int, data interface{}) {
+	c.RealCtx.Invoke(c.Renderers.Theme)
+	c.RealCtx.JSON(code, data)
 }

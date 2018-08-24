@@ -5,11 +5,16 @@
 </template>
 
 <script>
+import TitleBar from '@/components/title-bar.vue'
+
 module.exports = {
     beforeCreate: function() {
         const wm = this.$root
 
         wm.$emit('titleChange', "Dashboard")
+    },
+    components: {
+        TitleBar
     }
 }
 </script>
