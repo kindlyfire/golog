@@ -27,4 +27,4 @@ schema:
       - vue
     scripts:
       - type: after
-        command: node node_modules/browserify/bin/cmd.js public/js/panel.js -o public/dist/panel.js -d
+        command: node node_modules/browserify/bin/cmd.js public/js/panel.js -o public/dist/panel.js -d --fast

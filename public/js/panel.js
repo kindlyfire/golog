@@ -1,4 +1,5 @@
 
+require('babel-polyfill')
 const Vue = require('vue')
 const Router = require('vue-router')
 const comp = require('./panel.vue')
@@ -10,19 +11,23 @@ const routes = [
 
 const router = new Router({
     mode: 'history',
-    base: window.BASE_URL,
+    base: window.PANEL_URL,
     routes
 })
 
 Vue.use(Router)
 
-new Vue({
+const wm = new Vue({
     router,
-    el: "#app",
-    render: (h) => h(comp),
-    data: {
-        page: {
-            title: "Test !"
-        }
-    }
+    el: '#app',
+    render: (h) => h(comp)
 })
+
+router.beforeEach((to, from, next) => {
+    wm.$emit('titleBarChange', {
+        loading: false,
+        button: false
+    })
+    next()
+})
+

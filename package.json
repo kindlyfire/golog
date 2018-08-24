@@ -20,7 +20,9 @@
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-plugin-module-resolver": "^3.1.1",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
     "babelify": "^8.0.0",
     "browserify": "^16.2.2",
     "vue": "^2.5.17",
@@ -32,6 +34,7 @@
   },
   "browserify": {
     "transform": [
+      "babelify",
       "vueify"
     ]
   }

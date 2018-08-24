@@ -3,6 +3,9 @@
         <h2 class="title">
             {{ title }}
         </h2>
+        <button type="button" class="btn btn-primary" v-if="button" @click="button.callback">
+            {{ button.text }}
+        </button>
     </div>
 </template>
 
@@ -12,14 +15,20 @@ module.exports = {
         const wm = this.$root
 
         return {
-            title: wm.$data.page.title
+            title: "Dashboard",
+            loading: false,
+            button: null
         }
     },
     beforeCreate: function() {
         const wm = this.$root
 
-        wm.$on('titleChange', (title) => {
-            this.title = title
+        wm.$on('titleBarChange', (params) => {
+            for (let p of Object.keys(params)) {
+                if (['title', 'loading', 'button'].indexOf(p) !== -1) {
+                    this[p] = params[p]
+                }
+            } 
         })
     }
 }
@@ -37,5 +46,10 @@ module.exports = {
     font-size: 35px;
     margin: 0;
     padding-left: 20px;
+}
+.title-bar-container button {
+    margin-left: 20px;
+    background-color: transparent;
+    color: inherit;
 }
 </style>
