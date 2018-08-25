@@ -3,6 +3,8 @@ package router
 import (
 	"path"
 
+	"github.com/go-macaron/binding"
+
 	// ...
 	_ "github.com/go-macaron/session/redis"
 
@@ -77,7 +79,8 @@ func Register(m *macaron.Macaron) {
 
 	// API
 	m.Group("/gl-api/", func() {
-		m.Get("/posts/list", posts.List)
+		m.Get("/posts", posts.List)
+		m.Get("/posts/find", binding.BindIgnErr(posts.FindForm{}), posts.Find)
 	}, middleware.RequireUser)
 
 	// Register index and catch-all page renderer

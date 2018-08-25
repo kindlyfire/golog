@@ -32,7 +32,6 @@ export default {
             if ((!c.order || c.order == []) && c.data.length > 0) {
                 c.order = Object.keys(c.data[0])
             }
-            console.log(c)
             return c
         }
     }

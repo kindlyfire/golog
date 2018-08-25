@@ -11,7 +11,9 @@ module.exports = {
     beforeCreate: function() {
         const wm = this.$root
 
-        wm.$emit('titleChange', "Dashboard")
+        wm.$emit('titlebar_change', {
+            title: "Dashboard"
+        })
     },
     components: {
         TitleBar

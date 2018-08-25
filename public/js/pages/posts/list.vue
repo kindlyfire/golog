@@ -1,7 +1,24 @@
 <template>
     <div class="panel-container">
         <div class="posts">
-            <table-render :config="tableData"></table-render>
+            <table class="table">
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>CommentStatus</th>
+                    <th>CommentCount</th>
+                    <th>Actions</th>
+                </tr>
+                <tr v-for="(row) in posts" :key="row.ID">
+                    <td>{{ row.Title }}</td>
+                    <td>{{ row.Status }}</td>
+                    <td>{{ row.CommentStatus }}</td>
+                    <td>{{ row.CommentCount }}</td>
+                    <td>
+                        <router-link :to="'/posts/edit/' + row.ID">Edit</router-link>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </template>
@@ -12,7 +29,7 @@ import TableRender from '@/components/table-render.vue'
 
 export default {
     beforeCreate() {
-        this.$root.$emit('titleBarChange', {
+        this.$root.$emit('titlebar_change', {
             title: "Posts",
             loading: true,
             button: {
@@ -23,19 +40,13 @@ export default {
     },
     data() {
         return {
-            posts: [],
-            tableData: {
-                headings: ['Title', 'Status', 'CommentStatus', 'CommentCount'],
-                data: [],
-                order: ['ID', 'Title', 'CommentStatus', 'CommentCount']
-            }
+            posts: []
         }
     },
     async mounted() {
         this.posts = await API.Posts.list()
-        this.tableData.data = this.posts
 
-        this.$root.$emit('titleBarChange', {
+        this.$root.$emit('titlebar_change', {
             loading: false
         })
     },
